@@ -1,0 +1,410 @@
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyCricket11());
+}
+
+const gold = Color(0xFFFFC928);
+const black = Color(0xFF090909);
+
+class MyCricket11 extends StatelessWidget {
+  const MyCricket11({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'MY CRICKET 11',
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: black,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: gold,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int selectedTab = 0;
+
+  final List<String> players = [
+    'Rohit Sharma',
+    'Virat Kohli',
+    'Shubman Gill',
+    'Suryakumar Yadav',
+    'Hardik Pandya',
+    'Ravindra Jadeja',
+    'KL Rahul',
+    'Jasprit Bumrah',
+    'Mohammed Siraj',
+    'Kuldeep Yadav',
+    'Rishabh Pant',
+    'Yashasvi Jaiswal',
+    'Axar Patel',
+    'Arshdeep Singh',
+    'Sanju Samson',
+  ];
+
+  final List<String> selectedPlayers = [];
+
+  String captain = '';
+  String viceCaptain = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final pages = [
+      homePage(),
+      teamPage(),
+      leaderboardPage(),
+      profilePage(),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: black,
+        title: const Row(
+          children: [
+            Icon(Icons.sports_cricket, color: gold, size: 30),
+            SizedBox(width: 8),
+            Text(
+              'MY CRICKET 11',
+              style: TextStyle(
+                color: gold,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_none, color: gold),
+          ),
+        ],
+      ),
+      body: pages[selectedTab],
+      bottomNavigationBar: NavigationBar(
+        backgroundColor: const Color(0xFF191919),
+        indicatorColor: gold.withOpacity(0.2),
+        selectedIndex: selectedTab,
+        onDestinationSelected: (index) {
+          setState(() => selectedTab = index);
+        },
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.groups),
+            label: 'My Team',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.emoji_events),
+            label: 'Ranks',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget homePage() {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        Container(
+          padding: const EdgeInsets.all(22),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: gold),
+            gradient: const LinearGradient(
+              colors: [
+                Color(0xFF493708),
+                Color(0xFF151515),
+              ],
+            ),
+          ),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.sports_cricket, color: gold, size: 45),
+              SizedBox(height: 12),
+              Text(
+                'MY CRICKET 11',
+                style: TextStyle(
+                  color: gold,
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'CREATE YOUR DREAM TEAM',
+                style: TextStyle(color: Colors.white),
+              ),
+              SizedBox(height: 12),
+              Text(
+                'Play Free • Practice • Earn Points',
+                style: TextStyle(color: gold),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 25),
+        const Text(
+          'UPCOMING MATCHES',
+          style: TextStyle(
+            color: gold,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 12),
+        matchCard('INDIA', 'AUSTRALIA', 'International T20'),
+        matchCard('MUMBAI', 'CHENNAI', 'League Match'),
+        matchCard('ENGLAND', 'PAKISTAN', 'Practice Match'),
+      ],
+    );
+  }
+
+  Widget matchCard(String a, String b, String title) {
+    return Card(
+      color: const Color(0xFF191919),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: const BorderSide(color: Color(0xFF66501B)),
+      ),
+      margin: const EdgeInsets.only(bottom: 14),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(title, style: const TextStyle(color: Colors.white60)),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(a, style: const TextStyle(
+                  color: gold,
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                )),
+                const Text('VS'),
+                Text(b, style: const TextStyle(
+                  color: gold,
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                )),
+              ],
+            ),
+            const SizedBox(height: 15),
+            FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: gold,
+                foregroundColor: Colors.black,
+              ),
+              onPressed: () {
+                setState(() => selectedTab = 1);
+              },
+              child: const Text('CREATE PRACTICE TEAM'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget teamPage() {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const Text(
+          'CREATE YOUR TEAM',
+          style: TextStyle(
+            color: gold,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          '${selectedPlayers.length}/11 Players Selected',
+          style: const TextStyle(color: gold),
+        ),
+        LinearProgressIndicator(
+          value: selectedPlayers.length / 11,
+          color: gold,
+          backgroundColor: Colors.white12,
+        ),
+        const SizedBox(height: 12),
+        ...players.map((player) {
+          return Card(
+            color: const Color(0xFF191919),
+            child: CheckboxListTile(
+              activeColor: gold,
+              checkColor: Colors.black,
+              title: Text(player),
+              value: selectedPlayers.contains(player),
+              onChanged: (value) {
+                setState(() {
+                  if (value == true &&
+                      selectedPlayers.length < 11) {
+                    selectedPlayers.add(player);
+                  } else if (value == false) {
+                    selectedPlayers.remove(player);
+                    if (captain == player) captain = '';
+                    if (viceCaptain == player) viceCaptain = '';
+                  }
+                });
+              },
+            ),
+          );
+        }),
+        const SizedBox(height: 12),
+        DropdownButtonFormField<String>(
+          value: captain.isEmpty ? null : captain,
+          decoration: const InputDecoration(
+            labelText: 'Select Captain',
+            border: OutlineInputBorder(),
+          ),
+          items: selectedPlayers
+              .where((p) => p != viceCaptain)
+              .map((p) => DropdownMenuItem(
+                    value: p,
+                    child: Text(p),
+                  ))
+              .toList(),
+          onChanged: (value) {
+            setState(() => captain = value ?? '');
+          },
+        ),
+        const SizedBox(height: 15),
+        DropdownButtonFormField<String>(
+          value: viceCaptain.isEmpty ? null : viceCaptain,
+          decoration: const InputDecoration(
+            labelText: 'Select Vice Captain',
+            border: OutlineInputBorder(),
+          ),
+          items: selectedPlayers
+              .where((p) => p != captain)
+              .map((p) => DropdownMenuItem(
+                    value: p,
+                    child: Text(p),
+                  ))
+              .toList(),
+          onChanged: (value) {
+            setState(() => viceCaptain = value ?? '');
+          },
+        ),
+        const SizedBox(height: 20),
+        FilledButton(
+          style: FilledButton.styleFrom(
+            backgroundColor: gold,
+            foregroundColor: Colors.black,
+          ),
+          onPressed: selectedPlayers.length == 11 &&
+                  captain.isNotEmpty &&
+                  viceCaptain.isNotEmpty
+              ? () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Practice Team Saved!'),
+                    ),
+                  );
+                }
+              : null,
+          child: const Text('SAVE MY TEAM'),
+        ),
+      ],
+    );
+  }
+
+  Widget leaderboardPage() {
+    final names = [
+      'Cricket Star',
+      'Super Player',
+      'King 11',
+      'Champion',
+      'My Cricket 11',
+    ];
+
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const Text(
+          'LEADERBOARD',
+          style: TextStyle(
+            color: gold,
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 15),
+        ...List.generate(names.length, (i) {
+          return Card(
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: gold,
+                child: Text(
+                  '${i + 1}',
+                  style: const TextStyle(color: Colors.black),
+                ),
+              ),
+              title: Text(names[i]),
+              trailing: const Text(
+                'Practice',
+                style: TextStyle(color: gold),
+              ),
+            ),
+          );
+        }),
+      ],
+    );
+  }
+
+  Widget profilePage() {
+    return const Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 45,
+            backgroundColor: Color(0xFF493708),
+            child: Icon(Icons.person, size: 50, color: gold),
+          ),
+          SizedBox(height: 15),
+          Text(
+            'MY CRICKET 11',
+            style: TextStyle(
+              color: gold,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text('Guest Player'),
+          SizedBox(height: 15),
+          Text(
+            'Welcome to Fantasy Cricket',
+            style: TextStyle(color: Colors.white60),
+          ),
+        ],
+      ),
+    );
+  }
+}
