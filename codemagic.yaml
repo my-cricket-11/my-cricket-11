@@ -1,7 +1,7 @@
 
 workflows:
   android-workflow:
-    name: MY CRICKET 11
+    name: MY CRICKET 11 Android
     max_build_duration: 60
     instance_type: linux_x2
 
@@ -9,10 +9,10 @@ workflows:
       flutter: stable
 
     scripts:
-      - name: Prepare project
-        script: flutter create --platforms=android,ios --org com.mycricket11 .
+      - name: Prepare Android project
+        script: flutter create --platforms=android .
 
-      - name: Install packages
+      - name: Install dependencies
         script: flutter pub get
 
       - name: Build APK
@@ -20,4 +20,3 @@ workflows:
 
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
-			
